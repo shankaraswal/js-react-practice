@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+h1{
+    @apply text-[25px] text-teal-600 font-bold 
+}
+
+.tracking-wider  h3{
+    @apply text-[20px] font-medium text-orange-500 mt-10 pt-10 mb-1 border-t-2 border-gray-500
+}
+
+.tracking-wider pre {
+    @apply !text-[20px] 
+}
+
+
+.tracking-wider .btn-disabled {
+    @apply  bg-gray-300 text-gray-500  
+}
