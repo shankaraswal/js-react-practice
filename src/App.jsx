@@ -1,4 +1,4 @@
-import { Routes, Route, NavLink } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import { lazy, Suspense } from "react";
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from "./components/ErrorFallback"

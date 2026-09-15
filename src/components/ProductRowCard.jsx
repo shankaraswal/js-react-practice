@@ -25,27 +25,26 @@ const ProductRowCard = ({ product }) => {
         availabilityStatus === 'In Stock'
             ? 'text-green-600'
             : availabilityStatus === 'Low Stock'
-            ? 'text-amber-600'
-            : 'text-red-600';
+                ? 'text-amber-600'
+                : 'text-red-600';
 
     return (
-        <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md">
+        <div className="w-full rounded-xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
             {/* 👇 Row ke andar multiple columns */}
-            <div className="grid grid-cols-12 gap-4 items-start">
-
+            <div className="grid grid-cols-12 gap-4 items-start relative">
+                <span className="absolute left-0 top-0 flex-none bg-sky-500 rounded-br-xl text-white px-4 py-2 cursor-pointer">{id}</span>
                 {/* Col 1: Image */}
                 <div className="col-span-12 sm:col-span-3 lg:col-span-2 flex items-center justify-center rounded-lg bg-gray-50 p-2">
-                <span className="absolute left-0 top-0 flex-none bg-sky-500 text-white px-4 py-2 cursor-pointer rounded-full">{id}</span>
                     <img
                         src={thumbnail}
                         alt={title}
-                        className="max-h-32 w-auto object-contain"
+                        className="max-h-full w-auto object-contain"
                         loading="lazy"
                     />
                 </div>
 
                 {/* Col 2: Title + Description + Tags */}
-                <div className="col-span-12 sm:col-span-6 lg:col-span-5 flex flex-col gap-2">
+                <div className="col-span-12 sm:col-span-6 lg:col-span-5 flex flex-col gap-2 p-4">
                     <div className="flex items-center gap-2">
                         <span className="text-xs font-semibold uppercase tracking-wide text-sky-600">
                             {category}
@@ -76,7 +75,7 @@ const ProductRowCard = ({ product }) => {
                 </div>
 
                 {/* Col 3: Rating + Stock */}
-                <div className="col-span-6 sm:col-span-3 lg:col-span-2 flex flex-col gap-1">
+                <div className="col-span-6 sm:col-span-3 lg:col-span-2 flex flex-col gap-1 p-4">
                     <span className="text-sm text-gray-700">
                         ⭐ {rating} <span className="text-gray-400">/ 5</span>
                     </span>
@@ -86,7 +85,7 @@ const ProductRowCard = ({ product }) => {
                 </div>
 
                 {/* Col 4: Price */}
-                <div className="col-span-6 sm:col-span-12 lg:col-span-2 flex flex-col gap-1">
+                <div className="col-span-6 sm:col-span-12 lg:col-span-2 flex flex-col gap-1 p-4">
                     <span className="text-lg font-bold text-emerald-600">
                         ${discountedPrice}
                     </span>
@@ -103,7 +102,7 @@ const ProductRowCard = ({ product }) => {
                 </div>
 
                 {/* Col 5: Extra Info */}
-                <div className="col-span-12 lg:col-span-1 flex flex-col gap-1 text-xs text-gray-600">
+                <div className="col-span-12 lg:col-span-1 flex flex-col gap-1 text-xs text-gray-600 p-4">
                     <span title={warrantyInformation}>🛡️</span>
                     <span title={shippingInformation}>🚚</span>
                     <span title={returnPolicy}>↩️</span>

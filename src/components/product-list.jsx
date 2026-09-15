@@ -2,66 +2,66 @@ import React, { useState, useEffect } from 'react'
 
 
 export default function ProductList() {
-  const [list, setList]= useState([])
-  const [currentpage, setCurrentpage] = useState(1); 
-  const [paginationData, setPaginationData] = useState([]); 
-  const [cats, setCats] = useState([]); 
-  const itemperpage=3
-  const currentindex = currentpage === 1 ? 0: itemperpage*(currentpage-1);
+  const [list, setList] = useState([])
+  const [currentpage, setCurrentpage] = useState(1);
+  const [paginationData, setPaginationData] = useState([]);
+  const [cats, setCats] = useState([]);
+  const itemperpage = 3
+  const currentindex = currentpage === 1 ? 0 : itemperpage * (currentpage - 1);
 
-  const getItemList = async ()=>{
-    try{
-     const resp = await fetch('https://fakestoreapi.com/products')
-    
-     if(!resp.ok){
-      console.log(' api issue')
-      return null
-     }
-    
-     const data = await resp.json()
-     return data;
+  const getItemList = async () => {
+    try {
+      const resp = await fetch('https://fakestoreapi.com/products')
+
+      if (!resp.ok) {
+        console.log(' api issue')
+        return null
+      }
+
+      const data = await resp.json()
+      return data;
     }
-    catch(err){
+    catch (err) {
       console.error(err)
     }
   }
 
-  const getCategories= ()=>{
-  
+  const getCategories = () => {
+
 
   }
 
 
-  useEffect(()=>{
-    const getApidata= async()=>{
-     const apidata = await getItemList();
-     if(apidata){
-      setList(apidata)
-      setPaginationData(apidata.slice(currentindex,currentpage*itemperpage))
-      const cats =[...new Set(apidata.map((item)=>item.category ))]    
-      setCats(cats)     
-     }
+  useEffect(() => {
+    const getApidata = async () => {
+      const apidata = await getItemList();
+      if (apidata) {
+        setList(apidata)
+        setPaginationData(apidata.slice(currentindex, currentpage * itemperpage))
+        const cats = [...new Set(apidata.map((item) => item.category))]
+        setCats(cats)
+      }
     }
     getApidata()
-  },[])
+  }, [])
 
-  useEffect(()=>{
-  setPaginationData(list.slice(currentindex,currentpage*itemperpage))
-  },[currentpage])
+  useEffect(() => {
+    setPaginationData(list.slice(currentindex, currentpage * itemperpage))
+  }, [currentpage])
 
 
 
-  const totalpages=  Math.ceil(list.length / itemperpage); 
+  const totalpages = Math.ceil(list.length / itemperpage);
   const pageNumbers = [...Array(totalpages).keys()];
 
-  const filterCatsData=(e)=>{
-    const selectedcat= e.target.value;
-    let data=[]
-    if(selectedcat === 'all'){
+  const filterCatsData = (e) => {
+    const selectedcat = e.target.value;
+    let data = []
+    if (selectedcat === 'all') {
       data = list
     }
-    else{
-      data = list.filter((item)=>(
+    else {
+      data = list.filter((item) => (
         item.category === selectedcat
       ))
     }
@@ -71,41 +71,40 @@ export default function ProductList() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-     <div className="grid grid-cols-1   gap-6 w-full max-w-6xl">
-    
-    <div className="flex flex-row justify-between ">
-      <select 
-      onChange={filterCatsData}
-      className="border rounded-md px-3 bg-amber-100 text-black">
-      <option value='all'>All</option>
-       {cats.map((item)=>(
-        <option key={item} value={item}>{item}</option>
-      ))}
-      </select>
-      <div className="flex gap-2">
+    <div className="min-h-screen flex items-start justify-center p-4">
+      <div className="grid grid-cols-1 gap-6 w-full max-w-full">
 
-        {pageNumbers.map((num) => (
-          <button
-            key={num}
-            onClick={() => setCurrentpage(num + 1)}
-            className={`px-3 py-1 border rounded-md cursor-pointer hover:bg-amber-700 ${
-              currentpage === num + 1 ? 'bg-amber-800 text-white' : 'bg-amber-600'
-            }`}
-          >
-            {num + 1}
-          </button>
-        ))}
-      </div>
-      </div>
-      {paginationData.length === 0 &&<>No product found.</>}
-        {paginationData.map((item)=>(
+        <div className="flex flex-row justify-between ">
+          <select
+            onChange={filterCatsData}
+            className="border rounded-md px-3 bg-amber-50 text-black">
+            <option value='all'>All</option>
+            {cats.map((item) => (
+              <option key={item} value={item}>{item}</option>
+            ))}
+          </select>
+          <div className="flex gap-2">
+
+            {pageNumbers.map((num) => (
+              <button
+                key={num}
+                onClick={() => setCurrentpage(num + 1)}
+                className={`px-3 py-1 text-white border rounded-md cursor-pointer hover:bg-amber-700 ${currentpage === num + 1 ? 'bg-amber-800 text-white' : 'bg-amber-600'
+                  }`}
+              >
+                {num + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+        {paginationData.length === 0 && <>No product found.</>}
+        {paginationData.map((item) => (
           <div key={item.id} className="flex items-stretch p-4 bg-white border border-gray-200 shadow-sm rounded-xl mb-4 hover:shadow-md transition-all h-56">
-            <div className="flex-shrink-0 h-full">  
-              <img 
-                src={item.image || 'https://via.placeholder.com'} 
-                alt={item.title} 
-                className="w-full h-full object-cover rounded-l-lg"  
+            <div className="flex-shrink-0 h-full">
+              <img
+                src={item.image || 'https://via.placeholder.com'}
+                alt={item.title}
+                className="w-full h-full object-cover rounded-l-lg"
               />
             </div>
             <div className="ml-4 flex-1 flex flex-col justify-between">
@@ -135,7 +134,7 @@ export default function ProductList() {
                     <span className="text-gray-400 text-xs ml-1">({item.rating?.count || "100"})</span>
                   </div>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider bg-teal-600 px-2 py-1 rounded">
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-teal-600 text-white p-2 py-1 rounded">
                   {item.category}
                 </span>
               </div>

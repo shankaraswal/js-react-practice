@@ -1,8 +1,21 @@
-import {useContext} from 'react'
+import { useContext } from 'react'
 import { DataContext } from '../context';
 
 const Home = () => {
- const userdata = useContext(DataContext)
+  const userdata = useContext(DataContext)
+
+  console.clear()
+  // HOISTING AND TDZ
+  var a;
+
+  console.log("Hello World");
+
+  console.log(a);
+
+  a = 10;
+
+  console.log(a);
+
 
   return (
     <div>

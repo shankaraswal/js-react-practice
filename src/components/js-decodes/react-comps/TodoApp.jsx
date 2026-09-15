@@ -73,7 +73,7 @@ const TodoApp = () => {
             <p className="text-lg mb-4 text-sky-700 font-bold"> Todo List with Add/Delete/Toggle</p>
             <div className="pb-4 flex flex-row">
                 <div className='w-[40%]'>
-                    <ul className="list-disc list-inside text-md text-gray-700 space-y-1">
+                    <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
                         <li>An input field where the user can type a todo</li>
                         <li>An "Add" button to add a new todo to the list</li>
                         <li>Pressing the Enter key should also add the todo (bonus)</li>

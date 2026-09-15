@@ -3,7 +3,7 @@ import React from 'react';
 
 const ProductCard = ({ product }) => {
     const {
-        id, 
+        id,
         title,
         description,
         category,
@@ -27,13 +27,15 @@ const ProductCard = ({ product }) => {
         availabilityStatus === 'In Stock'
             ? 'text-green-600'
             : availabilityStatus === 'Low Stock'
-            ? 'text-amber-600'
-            : 'text-red-600';
+                ? 'text-amber-600'
+                : 'text-red-600';
 
     return (
-        <div className="flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md">
+        <div className="flex flex-col gap-3 rounded-xl border border-gray-200 relative bg-white p-4 shadow-sm transition hover:shadow-md">
             {/* Image */}
-            { id}
+            <span className='absolute left-0 top-0 bg-amber-600 w-10 h-10 text-2xl pt-1 justify-center text-center rounded-br-xl items-center text-white'>
+                {id}
+            </span>
             <div className="flex h-44 items-center justify-center rounded-lg bg-gray-50">
                 <img
                     src={thumbnail}
