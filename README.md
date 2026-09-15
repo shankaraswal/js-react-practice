@@ -1,16 +1,46 @@
-# React + Vite
+# React + Vite Practice Sandbox 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive React 19 and Vite laboratory repository built with Tailwind CSS v4, dynamic component importing, and custom hooks. Live deployment is hosted on GitHub Pages.
 
-Currently, two official plugins are available:
+🌐 **Live Demo:** [https://shankaraswal.github.io/js-react-practice/](https://shankaraswal.github.io/js-react-practice/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🛠️ Tech Stack & Tooling
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Core Framework:** React 19, Vite
+* **Styling:** Tailwind CSS v4
+* **Syntax Highlighting:** `react-syntax-highlighter` (Prism / `atomDark`)
+* **Code Quality:** ESLint
+* **Deployment:** `gh-pages`
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Key Features & Demonstrations
+
+### 1. `useLocalStorage` Custom Hook
+A robust React hook designed to safely manage Local Storage synchronization without stale states or crashing on unparsed JSON string values.
+* **Full CRUD Operations:** Support for `setStorageData`, `getStorageData`, `getAllKeyVals`, and `removeStorageData`.
+* **Safe JSON Parsing:** Built-in `try-catch` fallbacks to handle plain text strings alongside structured objects/arrays.
+* **Auto-Resetting Forms:** Clean input management for setting and inspecting key/value pairs in real time.
+
+### 2. Dynamic Component Showcase & Source Viewer
+* **Dynamic Imports:** Uses `import.meta.glob` to load components lazily (`Suspense`) directly from `./react-comps/*.jsx`.
+* **Interactive Code Accordions:** Built-in source code viewer with line numbers and toggleable expand/collapse mechanics for each demo component.
+
+---
+
+## 📂 Project Structure
+
+```text
+js-react-practice/
+├── public/
+│   └── sa.svg              # Custom "SA" favicon
+├── src/
+│   ├── hooks/
+│   │   └── useLocalStorage.js # Custom Local Storage hook
+│   ├── react-comps/        # Individual practice components
+│   ├── App.jsx             # Main application container
+│   └── ReactComps.jsx      # Dynamic showcase viewer with source accordion
+├── package.json
+└── vite.config.js          # Configured with GitHub Pages base path
