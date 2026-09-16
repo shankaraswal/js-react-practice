@@ -1,1 +1,0 @@
-import{r as n,j as r}from"./index-CJ-cxNaP.js";function s(){return n.useEffect(()=>{const e=()=>{console.log("Window resized")};return window.addEventListener("resize",e),()=>{window.removeEventListener("resize",e)}},[]),r.jsx("div",{children:"My Component"})}export{s as default};
