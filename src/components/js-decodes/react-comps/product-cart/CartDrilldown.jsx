@@ -1,9 +1,9 @@
 import React from 'react';
-import { useCart } from '../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
 
 export default function CartDrilldown({ isOpen = true, onClose }) {
     const { cartItem } = useCart()
-    console.log(cartItem)
+    // console.log(cartItem)
     const items = cartItem;
 
     const totalItems = items.reduce((sum, i) => sum + i.qty, 0);

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-console.clear()
+// console.clear()
 
 function checkPalindrom(str) {
     const palinrevstr = str.split('').reverse().join('');

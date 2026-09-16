@@ -12,10 +12,10 @@ const CodeRunner = ({ practice, seq }) => {
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="w-full flex justify-between items-center rounded-t-xl shadow-2xl
-                   bg-slate-500 hover:bg-slate-600 hover:cursor-pointer
+                   bg-stone-500 hover:bg-stone-600 hover:cursor-pointer
                    px-4 py-3 text-left"
       >
-        <h2 className="text-white text-2xl font-medium ">
+        <h2 className="!text-white text-2xl font-medium ">
           {seq}:  {practice.title}
         </h2>
 
@@ -26,7 +26,7 @@ const CodeRunner = ({ practice, seq }) => {
 
       {/* Accordion Content */}
       {isOpen && (
-        <div className="code-block bg-white border border-slate-500 rounded-b-xl shadow-2xl px-10">
+        <div className="code-block bg-white border border-stone-500 rounded-b-xl shadow-2xl px-10">
 
           {/* Params */}
           <h3 className="text-purple-700 p-4">

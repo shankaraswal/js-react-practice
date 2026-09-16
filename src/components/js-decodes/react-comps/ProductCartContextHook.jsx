@@ -1,13 +1,12 @@
 import ProductListWrapper from "./product-cart/ProductListWrapper"
-
-import { CartProvider } from './context/CartProvider';
+import { CartProvider } from './context-provider/CartProvider';
 
 const ProductCartContextHook = () => {
 
     return (
         <div>
             <>
-                <p className="text-lg mb-4 text-sky-700 font-bold"> Search Filter</p>
+                <p className="text-lg mb-4 text-sky-700 font-bold"> CartContext what useCart custom hook</p>
                 <div className="pb-4 flex flex-col">
                     <div className='w-[80%]'>
                         <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">

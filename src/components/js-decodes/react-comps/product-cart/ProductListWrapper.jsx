@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ProductsList from './ProductsList';
 import CartDrilldown from './CartDrilldown'
-import { useCart } from '../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
 
 
 const ProductListWrapper = () => {

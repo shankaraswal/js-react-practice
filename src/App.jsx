@@ -1,8 +1,9 @@
 import { HashRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import { lazy, Suspense } from "react";
 import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from "./components/ErrorFallback"
+import { MessageProvider } from './components/js-decodes/react-comps/context-provider/MessageProvider'
 
+import ErrorFallback from "./components/ErrorFallback"
 import Home from "./components/home";
 import ProductList from "./components/product-list";
 import RecipeList from "./components/recipe-list";
@@ -91,9 +92,9 @@ function Sidebar() {
         {menu.map((section) => (
           <div key={section.title}>
 
-            <h2 className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <h5 className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
               {section.title}
-            </h2>
+            </h5>
 
             <div className="space-y-1">
 
@@ -140,222 +141,223 @@ export default function App() {
   };
 
   return (
-    <DataContext.Provider value={dataValue}>
-      <div className="min-h-screen bg-white">
-        {/* Header */}
-        <header className="h-14 border-b border-gray-200 px-6 flex items-center">
-          <div className="text-lg font-bold text-teal-700">
-            React / Frontend Examples
-          </div>
-        </header>
-        {/* Main Layout */}
-        <div className="flex min-h-[calc(100vh-56px)]">
-          {/* Sidebar */}
-          <Sidebar />
-
-          {/* Content */}
-          <main className="min-w-0 flex-1 ">
-            <div className="mx-auto w-full p-8 bg-orange-50">
-              <Routes>
-
-                <Route
-                  path="/"
-                  element={<Home />}
-                />
-
-                <Route
-                  path="/todo"
-                  element={<TodoList />}
-                />
-
-                <Route
-                  path="/products"
-                  element={<ProductList />}
-                />
-
-                <Route
-                  path="/recipes"
-                  element={<RecipeList />}
-                />
-
-                <Route
-                  path="/hook-products"
-                  element={<HookProductList />}
-                />
-
-                <Route
-                  path="/gallery"
-                  element={<Gallery />}
-                />
-
-                <Route
-                  path="/photos"
-                  element={<PhotoCard />}
-                />
-
-                <Route
-                  path="/virtualiztion"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <Virtualization />
-                    </Suspense>
-                  }
-                />
-
-                <Route
-                  path="/usememo"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <UseMemo />
-                    </Suspense>
-                  }
-                />
-
-                <Route
-                  path="/usecallback"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <UseCallback />
-                    </Suspense>
-                  }
-                />
-
-                <Route
-                  path="/debouncing"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <Debouncing />
-                    </Suspense>
-                  }
-                />
-
-                <Route
-                  path="/elistener"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <AddEventListener />
-                    </Suspense>
-                  }
-                />
-                <Route
-                  path="/coforge"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <>
-                        <Coforge />
-                        <Coforge1 />
-                      </>
-                    </Suspense>
-                  }
-                />
-
-                <Route
-                  path="/jspractice"
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <JsPractice />
-                    </Suspense>
-                  }
-                />
-
-
-                <Route
-                  path="/async-api"
-                  element={
-                    <ErrorBoundary
-                      onError={(error, info) => {
-                        console.log('Boundary catched:', error.message);
-                        console.log('Component stack:', info.componentStack);
-                      }}
-                      fallback={<p className="p-4 text-red-600">ERROR FOUND: BOUNDARIES</p>}
-                    // FallbackComponent={ErrorFallback}
-                    >
-                      <Suspense fallback={<Loading />}>
-                        <AsyncApi />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/async-api-virtualization"
-                  element={
-                    <ErrorBoundary
-                      onError={(error, info) => {
-                        console.log('Boundary catched:', error.message);
-                        console.log('Component stack:', info.componentStack);
-                      }}
-                      fallback={<p className="p-4 text-red-600">ERROR FOUND: BOUNDARIES</p>}
-                    // FallbackComponent={ErrorFallback}
-                    >
-                      <Suspense fallback={<Loading />}>
-                        <AsyncApiVirtualization />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/use-api"
-                  element={
-                    <ErrorBoundary
-                      onError={(error, info) => {
-                        console.log('Boundary catched:', error.message);
-                        console.log('Component stack:', info.componentStack);
-                      }}
-                      fallback={<p className="p-4 text-red-600">ERROR FOUND: via using use() api -- UseApiProductList</p>}
-                    // FallbackComponent={ErrorFallback}
-                    >
-                      <Suspense fallback={<Loading />}>
-                        <UseApiProductList />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/js-decodes"
-                  element={
-                    <ErrorBoundary
-                      onError={(error, info) => {
-                        console.log('Boundary catched:', error.message);
-                        console.log('Component stack:', info.componentStack);
-                      }}
-                      // FallbackComponent={ErrorFallback}
-                      fallback={<p className="p-4 text-red-600">ERROR FOUND: js-decodes component</p>}
-                    >
-                      <Suspense fallback={<Loading />}>
-                        <JSDecodes />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-
-                <Route
-                  path="/react-comps"
-                  element={
-                    <ErrorBoundary
-                      onError={(error, info) => {
-                        console.log('Boundary catched:', error.message);
-                        console.log('Component stack:', info.componentStack);
-                      }}
-                      // FallbackComponent={ErrorFallback}
-                      fallback={<p className="p-4 text-red-600">ERROR FOUND: react practice component</p>}
-                    >
-                      <Suspense fallback={<Loading />}>
-                        <ReactComps />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-
-                <Route
-                  path="*"
-                  element={<NotFound />}
-                />
-              </Routes>
+    <MessageProvider>
+      <DataContext.Provider value={dataValue}>
+        <div className="min-h-screen bg-white">
+          {/* Header */}
+          <header className="h-14 border-b border-gray-200 px-6 flex items-center">
+            <div className="text-lg font-bold text-teal-700">
+              React / Frontend Examples
             </div>
-          </main>
-        </div>
-      </div>
+          </header>
+          {/* Main Layout */}
+          <div className="flex min-h-[calc(100vh-56px)]">
+            {/* Sidebar */}
+            <Sidebar />
 
-    </DataContext.Provider>
+            {/* Content */}
+            <main className="min-w-0 flex-1 ">
+              <div className="mx-auto w-full p-8 bg-orange-50">
+                <Routes>
+
+                  <Route
+                    path="/"
+                    element={<Home />}
+                  />
+
+                  <Route
+                    path="/todo"
+                    element={<TodoList />}
+                  />
+
+                  <Route
+                    path="/products"
+                    element={<ProductList />}
+                  />
+
+                  <Route
+                    path="/recipes"
+                    element={<RecipeList />}
+                  />
+
+                  <Route
+                    path="/hook-products"
+                    element={<HookProductList />}
+                  />
+
+                  <Route
+                    path="/gallery"
+                    element={<Gallery />}
+                  />
+
+                  <Route
+                    path="/photos"
+                    element={<PhotoCard />}
+                  />
+
+                  <Route
+                    path="/virtualiztion"
+                    element={
+                      <Suspense fallback={<Loading />}>
+                        <Virtualization />
+                      </Suspense>
+                    }
+                  />
+
+                  <Route
+                    path="/usememo"
+                    element={
+                      <Suspense fallback={<Loading />}>
+                        <UseMemo />
+                      </Suspense>
+                    }
+                  />
+
+                  <Route
+                    path="/usecallback"
+                    element={
+                      <Suspense fallback={<Loading />}>
+                        <UseCallback />
+                      </Suspense>
+                    }
+                  />
+
+                  <Route
+                    path="/debouncing"
+                    element={
+                      <Suspense fallback={<Loading />}>
+                        <Debouncing />
+                      </Suspense>
+                    }
+                  />
+
+                  <Route
+                    path="/elistener"
+                    element={
+                      <Suspense fallback={<Loading />}>
+                        <AddEventListener />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/coforge"
+                    element={
+                      <Suspense fallback={<Loading />}>
+                        <>
+                          <Coforge />
+                          <Coforge1 />
+                        </>
+                      </Suspense>
+                    }
+                  />
+
+                  <Route
+                    path="/jspractice"
+                    element={
+                      <Suspense fallback={<Loading />}>
+                        <JsPractice />
+                      </Suspense>
+                    }
+                  />
+
+
+                  <Route
+                    path="/async-api"
+                    element={
+                      <ErrorBoundary
+                        onError={(error, info) => {
+                          console.log('Boundary catched:', error.message);
+                          console.log('Component stack:', info.componentStack);
+                        }}
+                        fallback={<p className="p-4 text-red-600">ERROR FOUND: BOUNDARIES</p>}
+                      // FallbackComponent={ErrorFallback}
+                      >
+                        <Suspense fallback={<Loading />}>
+                          <AsyncApi />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/async-api-virtualization"
+                    element={
+                      <ErrorBoundary
+                        onError={(error, info) => {
+                          console.log('Boundary catched:', error.message);
+                          console.log('Component stack:', info.componentStack);
+                        }}
+                        fallback={<p className="p-4 text-red-600">ERROR FOUND: BOUNDARIES</p>}
+                      // FallbackComponent={ErrorFallback}
+                      >
+                        <Suspense fallback={<Loading />}>
+                          <AsyncApiVirtualization />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/use-api"
+                    element={
+                      <ErrorBoundary
+                        onError={(error, info) => {
+                          console.log('Boundary catched:', error.message);
+                          console.log('Component stack:', info.componentStack);
+                        }}
+                        fallback={<p className="p-4 text-red-600">ERROR FOUND: via using use() api -- UseApiProductList</p>}
+                      // FallbackComponent={ErrorFallback}
+                      >
+                        <Suspense fallback={<Loading />}>
+                          <UseApiProductList />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/js-decodes"
+                    element={
+                      <ErrorBoundary
+                        onError={(error, info) => {
+                          console.log('Boundary catched:', error.message);
+                          console.log('Component stack:', info.componentStack);
+                        }}
+                        // FallbackComponent={ErrorFallback}
+                        fallback={<p className="p-4 text-red-600">ERROR FOUND: js-decodes component</p>}
+                      >
+                        <Suspense fallback={<Loading />}>
+                          <JSDecodes />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+
+                  <Route
+                    path="/react-comps"
+                    element={
+                      <ErrorBoundary
+                        onError={(error, info) => {
+                          console.log('Boundary catched:', error.message);
+                          console.log('Component stack:', info.componentStack);
+                        }}
+                        // FallbackComponent={ErrorFallback}
+                        fallback={<p className="p-4 text-red-600">ERROR FOUND: react practice component</p>}
+                      >
+                        <Suspense fallback={<Loading />}>
+                          <ReactComps />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+
+                  <Route
+                    path="*"
+                    element={<NotFound />}
+                  />
+                </Routes>
+              </div>
+            </main>
+          </div>
+        </div>
+      </DataContext.Provider>
+    </MessageProvider>
   );
 }

@@ -57,9 +57,9 @@ const SearchableList = () => {
 
     return (
         <>
-            <p className="text-lg mb-4 text-sky-700 font-bold"> Search Filter</p>
+            <h2 className="text-lg mb-4 text-sky-700 font-bold"> Search Filter</h2>
             <div className="pb-4 flex flex-col">
-                <div className='w-[40%]'>
+                <div className='w-full'>
                     <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
                         <li>Given an array of items: "https://fakestoreapi.com/products"</li>
                         <li>There should be a search input field</li>

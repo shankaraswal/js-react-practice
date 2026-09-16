@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
-import { useCart } from '../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
 
 const ProductsList = () => {
     const [products, setProducts] = useState([]);
@@ -27,7 +27,7 @@ const ProductsList = () => {
     if (loading) return <p className="p-4 text-slate-500">Loading…</p>;
     if (!products.length) return <p className="p-4 text-slate-500">No products found</p>;
 
-    console.log(itemList)
+    // console.log(itemList)
 
     return (
         <>
