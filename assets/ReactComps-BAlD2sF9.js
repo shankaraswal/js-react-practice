@@ -1,5 +1,5 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Accordion-DIqZgzuW.js","assets/index-BWnHbPrb.js","assets/index-7lUM13I5.css","assets/CountdownTimer-Dw3Y0VEv.js","assets/DebounceSearchHook-D3ms9SiR.js","assets/HelperComps-7T2bAoXr.js","assets/DebounceSearch_NoHook-BZ3bO1fA.js","assets/FetchDemo-DnRi2P-C.js","assets/LimitedCounter-CDlRkSWA.js","assets/LocalStorageHook-BnVXTmv8.js","assets/ProductCartContextHook-CM-Gb3wi.js","assets/SearchableList-Ctqca9o7.js","assets/StarRating-DyFVlhw_.js","assets/TodoApp-CPt3-w-g.js","assets/ToggleLIkeDislike--yk-JjV6.js","assets/WindowResizeHook-B6wyeemO.js"])))=>i.map(i=>d[i]);
-import{j as t,r as n,_ as e}from"./index-BWnHbPrb.js";import{h as i,a as r}from"./atom-dark-DTmF_it0.js";const d=`import React, { useState } from 'react'
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Accordion-CxKl4vHT.js","assets/index-DnM9gnAQ.js","assets/index-7lUM13I5.css","assets/CountdownTimer-CYdGBJ--.js","assets/DebounceSearchHook-Ce8BU7p1.js","assets/HelperComps-CHux63Gi.js","assets/DebounceSearch_NoHook-DXGrwwSO.js","assets/FetchDemo-Cn0sNMpK.js","assets/LimitedCounter-DTQI3jMb.js","assets/LocalStorageHook-Ct6Ksd6p.js","assets/ProductCartContextHook-BGOedKgq.js","assets/SearchableList-Br-KVN9Q.js","assets/StarRating-_r92eElX.js","assets/TodoApp-CKYCBusT.js","assets/ToggleLIkeDislike-Ddhnf8zo.js","assets/WindowResizeHook-Bu-y1_-e.js"])))=>i.map(i=>d[i]);
+import{j as t,r as n,_ as e}from"./index-DnM9gnAQ.js";import{h as i,a as r}from"./atom-dark-iymuLEN0.js";const d=`import React, { useState } from 'react'
 const titles = ["Privacy Policy", "Terms of Service", "Cookie Policy", "GDPR"];
 const privacyPolicyHTML = \`
   <div class="max-w-3xl mx-auto p-6 text-gray-800 leading-relaxed">
@@ -137,7 +137,7 @@ const Accordion = ({ item, handleToggle }) => {
         </div>
     );
 }`,c=`import React, { useEffect, useMemo, useCallback, useState } from 'react'
-const INITIAL_VAL = 10
+const INITIAL_VAL = 15
 const CountdownTimer = () => {
     const [initialValue, setInitialValue] = useState(INITIAL_VAL);
     const [time, setTime] = useState(INITIAL_VAL)
@@ -145,7 +145,7 @@ const CountdownTimer = () => {
 
 
     const formatted = useMemo(() => {
-        const m = String(Math.ceil(Math.max(time, 0) / 60)).padStart(2, "0");
+        const m = String(Math.trunc(Math.max(time, 0) / 60)).padStart(2, "0");
         const s = String(Math.max(time, 0) % 60).padStart(2, "0");
         return \`\${m}:\${s}\`;
     }, [time]);
@@ -172,9 +172,11 @@ const CountdownTimer = () => {
     }, [isRunning]);
 
     const handelInitalVal = (e) => {
-        const v = Number(e.target.value) || 0;
-        setInitialValue(v);
-        setTime(v);
+        const v = Number(e.target.value);
+        if (Number.isNaN(v) || v < 0) return;
+
+        setInitialValue((prev) => prev + v);
+        setTime((prev) => prev + v);
     };
 
     const handlePreset = (preset) => {
@@ -228,7 +230,7 @@ const CountdownTimer = () => {
                     <div className="min-h-auto py-10 flex items-center justify-center bg-gray-100 p-4">
                         <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 space-y-6">
                             <h1 className="text-2xl font-bold text-center text-gray-800">
-                                Countdown Timer: {progressPercent}
+                                Countdown Timer: {formatted}
                             </h1>
                             <div className="flex flex-col items-center gap-6 p-8">
                                 <div className="relative w-[200px] h-[200px]">
@@ -267,6 +269,7 @@ const CountdownTimer = () => {
                                     <label className="text-sm text-gray-600">Set time (sec):</label>
                                     <input
                                         onchange={handelInitalVal}
+                                        value={time}
                                         type="number"
                                         placeholder="Enter seconds"
                                         className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -1460,4 +1463,4 @@ const LocalStorageHook = () => {
         </>
     )
 }
-export default LocalStorageHook`,N=Object.assign({"./react-comps/Accordion.jsx":()=>e(()=>import("./Accordion-DIqZgzuW.js"),__vite__mapDeps([0,1,2])),"./react-comps/CountdownTimer.jsx":()=>e(()=>import("./CountdownTimer-Dw3Y0VEv.js"),__vite__mapDeps([3,1,2])),"./react-comps/DebounceSearchHook.jsx":()=>e(()=>import("./DebounceSearchHook-D3ms9SiR.js"),__vite__mapDeps([4,1,2,5])),"./react-comps/DebounceSearch_NoHook.jsx":()=>e(()=>import("./DebounceSearch_NoHook-BZ3bO1fA.js"),__vite__mapDeps([6,1,2,5])),"./react-comps/FetchDemo.jsx":()=>e(()=>import("./FetchDemo-DnRi2P-C.js"),__vite__mapDeps([7,1,2,5])),"./react-comps/LimitedCounter.jsx":()=>e(()=>import("./LimitedCounter-CDlRkSWA.js"),__vite__mapDeps([8,1,2])),"./react-comps/LocalStorageHook.jsx":()=>e(()=>import("./LocalStorageHook-BnVXTmv8.js"),__vite__mapDeps([9,1,2])),"./react-comps/ProductCartContextHook.jsx":()=>e(()=>import("./ProductCartContextHook-CM-Gb3wi.js"),__vite__mapDeps([10,1,2])),"./react-comps/SearchableList.jsx":()=>e(()=>import("./SearchableList-Ctqca9o7.js"),__vite__mapDeps([11,1,2])),"./react-comps/StarRating.jsx":()=>e(()=>import("./StarRating-DyFVlhw_.js"),__vite__mapDeps([12,1,2])),"./react-comps/TodoApp.jsx":()=>e(()=>import("./TodoApp-CPt3-w-g.js"),__vite__mapDeps([13,1,2])),"./react-comps/ToggleLIkeDislike.jsx":()=>e(()=>import("./ToggleLIkeDislike--yk-JjV6.js"),__vite__mapDeps([14,1,2])),"./react-comps/WindowResizeHook.jsx":()=>e(()=>import("./WindowResizeHook-B6wyeemO.js"),__vite__mapDeps([15,1,2]))}),k=Object.assign({"./react-comps/Accordion.jsx":d,"./react-comps/CountdownTimer.jsx":c,"./react-comps/DebounceSearchHook.jsx":u,"./react-comps/DebounceSearch_NoHook.jsx":m,"./react-comps/FetchDemo.jsx":p,"./react-comps/LimitedCounter.jsx":g,"./react-comps/LocalStorageHook.jsx":b,"./react-comps/ProductCartContextHook.jsx":h,"./react-comps/SearchableList.jsx":x,"./react-comps/StarRating.jsx":f,"./react-comps/TodoApp.jsx":v,"./react-comps/ToggleLIkeDislike.jsx":y,"./react-comps/WindowResizeHook.jsx":w}),S=Object.entries(N).map(([s,a])=>{const o=s.replace("./react-comps/","").replace(".jsx","");return{LazyComponent:n.lazy(a),name:o,source:k[s]??"// Source not available"}}),C=({source:s})=>{const[a,o]=n.useState(!1);return t.jsxs("div",{className:"mt-4 border-t border-gray-200 pt-4",children:[t.jsx("button",{type:"button",onClick:()=>o(l=>!l),className:"px-4 py-2 text-sm font-semibold text-orange-600 border border-orange-500 rounded-md hover:bg-orange-50 transition-colors cursor-pointer",children:a?"Hide Source Code":"Show Source Code"}),a&&t.jsx("div",{className:"mt-3 rounded-lg overflow-hidden",children:t.jsx(i,{language:"javascript",style:r,showLineNumbers:!0,children:s})})]})},T=()=>t.jsx("div",{children:S.map(({name:s,LazyComponent:a,source:o})=>t.jsxs("div",{className:"border border-orange-300 p-10 bg-white rounded-xl mb-6",children:[t.jsx("h3",{className:"text-2xl text-orange-600 font-bold mb-2",children:s}),t.jsx(n.Suspense,{fallback:t.jsx("p",{children:"Loading component…"}),children:t.jsx(a,{})}),t.jsx(C,{source:o})]},s))});export{T as default};
+export default LocalStorageHook`,N=Object.assign({"./react-comps/Accordion.jsx":()=>e(()=>import("./Accordion-CxKl4vHT.js"),__vite__mapDeps([0,1,2])),"./react-comps/CountdownTimer.jsx":()=>e(()=>import("./CountdownTimer-CYdGBJ--.js"),__vite__mapDeps([3,1,2])),"./react-comps/DebounceSearchHook.jsx":()=>e(()=>import("./DebounceSearchHook-Ce8BU7p1.js"),__vite__mapDeps([4,1,2,5])),"./react-comps/DebounceSearch_NoHook.jsx":()=>e(()=>import("./DebounceSearch_NoHook-DXGrwwSO.js"),__vite__mapDeps([6,1,2,5])),"./react-comps/FetchDemo.jsx":()=>e(()=>import("./FetchDemo-Cn0sNMpK.js"),__vite__mapDeps([7,1,2,5])),"./react-comps/LimitedCounter.jsx":()=>e(()=>import("./LimitedCounter-DTQI3jMb.js"),__vite__mapDeps([8,1,2])),"./react-comps/LocalStorageHook.jsx":()=>e(()=>import("./LocalStorageHook-Ct6Ksd6p.js"),__vite__mapDeps([9,1,2])),"./react-comps/ProductCartContextHook.jsx":()=>e(()=>import("./ProductCartContextHook-BGOedKgq.js"),__vite__mapDeps([10,1,2])),"./react-comps/SearchableList.jsx":()=>e(()=>import("./SearchableList-Br-KVN9Q.js"),__vite__mapDeps([11,1,2])),"./react-comps/StarRating.jsx":()=>e(()=>import("./StarRating-_r92eElX.js"),__vite__mapDeps([12,1,2])),"./react-comps/TodoApp.jsx":()=>e(()=>import("./TodoApp-CKYCBusT.js"),__vite__mapDeps([13,1,2])),"./react-comps/ToggleLIkeDislike.jsx":()=>e(()=>import("./ToggleLIkeDislike-Ddhnf8zo.js"),__vite__mapDeps([14,1,2])),"./react-comps/WindowResizeHook.jsx":()=>e(()=>import("./WindowResizeHook-Bu-y1_-e.js"),__vite__mapDeps([15,1,2]))}),k=Object.assign({"./react-comps/Accordion.jsx":d,"./react-comps/CountdownTimer.jsx":c,"./react-comps/DebounceSearchHook.jsx":u,"./react-comps/DebounceSearch_NoHook.jsx":m,"./react-comps/FetchDemo.jsx":p,"./react-comps/LimitedCounter.jsx":g,"./react-comps/LocalStorageHook.jsx":b,"./react-comps/ProductCartContextHook.jsx":h,"./react-comps/SearchableList.jsx":x,"./react-comps/StarRating.jsx":f,"./react-comps/TodoApp.jsx":v,"./react-comps/ToggleLIkeDislike.jsx":y,"./react-comps/WindowResizeHook.jsx":w}),S=Object.entries(N).map(([s,a])=>{const o=s.replace("./react-comps/","").replace(".jsx","");return{LazyComponent:n.lazy(a),name:o,source:k[s]??"// Source not available"}}),C=({source:s})=>{const[a,o]=n.useState(!1);return t.jsxs("div",{className:"mt-4 border-t border-gray-200 pt-4",children:[t.jsx("button",{type:"button",onClick:()=>o(l=>!l),className:"px-4 py-2 text-sm font-semibold text-orange-600 border border-orange-500 rounded-md hover:bg-orange-50 transition-colors cursor-pointer",children:a?"Hide Source Code":"Show Source Code"}),a&&t.jsx("div",{className:"mt-3 rounded-lg overflow-hidden",children:t.jsx(i,{language:"javascript",style:r,showLineNumbers:!0,children:s})})]})},T=()=>t.jsx("div",{children:S.map(({name:s,LazyComponent:a,source:o})=>t.jsxs("div",{className:"border border-orange-300 p-10 bg-white rounded-xl mb-6",children:[t.jsx("h3",{className:"text-2xl text-orange-600 font-bold mb-2",children:s}),t.jsx(n.Suspense,{fallback:t.jsx("p",{children:"Loading component…"}),children:t.jsx(a,{})}),t.jsx(C,{source:o})]},s))});export{T as default};
