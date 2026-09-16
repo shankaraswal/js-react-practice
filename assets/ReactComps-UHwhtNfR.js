@@ -1,10 +1,8 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/AAccordion-CG67K2rB.js","assets/index-B5Zmdb6J.js","assets/index-C81YCd5Y.css","assets/DebounceSearchHook-CyxB2OVA.js","assets/HelperComps-DihUs7FA.js","assets/DebounceSearch_NoHook-J8QLjGhy.js","assets/LimitedCounter-B_3eu9ii.js","assets/LocalStorageHook-BElifeWx.js","assets/ProductCartContextHook-CT37yfjc.js","assets/SearchableList-CEarpyHh.js","assets/TodoApp-C6Uwr44Y.js","assets/ToggleLIkeDislike-Bs-VVhto.js","assets/WindowResizeHook-BeELFK6C.js"])))=>i.map(i=>d[i]);
-import{j as e,r as l,_ as t}from"./index-B5Zmdb6J.js";import{h as r,a as n}from"./atom-dark-CXwC4Jw7.js";const d=`import React, { useEffect, useState } from 'react'
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Accordion-DIqZgzuW.js","assets/index-BWnHbPrb.js","assets/index-7lUM13I5.css","assets/CountdownTimer-Dw3Y0VEv.js","assets/DebounceSearchHook-D3ms9SiR.js","assets/HelperComps-7T2bAoXr.js","assets/DebounceSearch_NoHook-BZ3bO1fA.js","assets/FetchDemo-DnRi2P-C.js","assets/LimitedCounter-CDlRkSWA.js","assets/LocalStorageHook-BnVXTmv8.js","assets/ProductCartContextHook-CM-Gb3wi.js","assets/SearchableList-Ctqca9o7.js","assets/StarRating-DyFVlhw_.js","assets/TodoApp-CPt3-w-g.js","assets/ToggleLIkeDislike--yk-JjV6.js","assets/WindowResizeHook-B6wyeemO.js"])))=>i.map(i=>d[i]);
+import{j as t,r as n,_ as e}from"./index-BWnHbPrb.js";import{h as i,a as r}from"./atom-dark-DTmF_it0.js";const d=`import React, { useState } from 'react'
 const titles = ["Privacy Policy", "Terms of Service", "Cookie Policy", "GDPR"];
 const privacyPolicyHTML = \`
   <div class="max-w-3xl mx-auto p-6 text-gray-800 leading-relaxed">
-    <h1 class="text-2xl font-bold text-sky-700 mb-4">Privacy Policy</h1>
-
     <p class="mb-4">
       This Privacy Policy explains how your personal information is collected, used,
       disclosed, and otherwise processed by the respective operating entity of the Site:
@@ -34,6 +32,7 @@ const privacyPolicyHTML = \`
 \`;
 
 function Accordions() {
+    const [multiple, setMultiple] = useState(false)
     const [accs, setAccs] = useState(() =>
         Array.from({ length: 4 }, (_, ind) => ({
             id: \`\${Date.now()}-\${ind} \`,
@@ -44,13 +43,13 @@ function Accordions() {
     )
 
     const handleToggle = (id) => {
-        setAccs((prev) => prev.map((item) => {
-            if (id === item.id) {
-                return { ...item, open: true }
-            } else {
-                return { ...item, open: false }
-            }
-        }))
+        setAccs((prev) => prev.map((item) =>
+            multiple
+                ? id === item.id
+                    ? { ...item, open: !item.open }
+                    : item
+                : id === item.id ? { ...item, open: !item.open } : { ...item, open: false }
+        ))
     }
 
     const expandToggle = (type) => {
@@ -58,10 +57,10 @@ function Accordions() {
             type === 'expand' ? { ...item, open: true } : { ...item, open: false }
         ))
     }
-    console.log(accs)
+    // console.log(multiple)
     return (
         <>
-            <h2 className="text-lg mb-4 text-sky-700 font-bold">Debounce Searching Without useDebounce Hook </h2>
+            <h2 className="text-lg mb-4 text-sky-700 font-bold">Accordion optional single/multi toggle</h2>
             <div className="pb-4 flex flex-col gap-10">
                 <div className='w-full'>
                     <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
@@ -80,6 +79,13 @@ function Accordions() {
                 <div className=''>
                     <div className="flex flex-col w-full">
                         <div className='flex flex-row p-4 justify-end gap-4'>
+                            <label className='border border-red-100 bg-red-50 px-4 py-1 rounded-xl hover:bg-amber-100 hover:cursor-pointer'>Toggle and multiple Expand:
+                                <input
+                                    onChange={(e) => setMultiple(e.currentTarget.checked)}
+                                    type="checkbox"
+                                    checked={multiple}
+                                    className="ml-2 checkbox rounded-xl border border-red-300 p-2" />
+                            </label>
                             <button
                                 onClick={() => expandToggle('expand')}
                             >Expand All</button>
@@ -124,12 +130,196 @@ const Accordion = ({ item, handleToggle }) => {
             {/* CONTENT */}
             {item.open && (
                 <div className="px-4 py-3 bg-white text-sm text-gray-700">
+                    <h1 class="text-2xl font-bold text-sky-700 mb-4">{item.title}</h1>
                     <div dangerouslySetInnerHTML={{ __html: item.body }} />;
                 </div>
             )}
         </div>
     );
-}`,c=`import React, { useEffect, useState } from 'react'
+}`,c=`import React, { useEffect, useMemo, useCallback, useState } from 'react'
+const INITIAL_VAL = 10
+const CountdownTimer = () => {
+    const [initialValue, setInitialValue] = useState(INITIAL_VAL);
+    const [time, setTime] = useState(INITIAL_VAL)
+    const [isRunning, setIsRunning] = useState(false)
+
+
+    const formatted = useMemo(() => {
+        const m = String(Math.ceil(Math.max(time, 0) / 60)).padStart(2, "0");
+        const s = String(Math.max(time, 0) % 60).padStart(2, "0");
+        return \`\${m}:\${s}\`;
+    }, [time]);
+
+    const progressPercent = useMemo(() => {
+        if (!initialValue) return 0;
+        const p = (time / initialValue) * 100;
+        const clamped = Math.max(0, Math.min(p, 100));
+        return Math.floor(clamped);
+    }, [time, initialValue]);
+
+    useEffect(() => {
+        if (!isRunning) return;
+        const xx = setInterval(() => {
+            setTime((prev) => {
+                if (prev <= 1) {
+                    setIsRunning(false);
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+        return () => clearInterval(xx);
+    }, [isRunning]);
+
+    const handelInitalVal = (e) => {
+        const v = Number(e.target.value) || 0;
+        setInitialValue(v);
+        setTime(v);
+    };
+
+    const handlePreset = (preset) => {
+        setInitialValue(preset);
+        setTime(preset);
+    };
+
+    const handleStart = useCallback(() => {
+        setTime((prev) => (prev > 0 ? prev : initialValue));
+        setIsRunning(true);
+    }, [initialValue]);
+
+    const handlePause = useCallback(() => {
+        setIsRunning((prev) => !prev);
+    }, []);
+
+    const handleReset = useCallback(() => {
+        setTime(initialValue);
+        setIsRunning(false);
+    }, [initialValue]);
+
+
+    // SVG ring math
+    const radius = 90;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (progressPercent / 100) * circumference;
+
+
+    console.log(progressPercent)
+
+    return (
+        <>
+            <h2 className="text-lg mb-4 text-sky-700 font-bold">Accordion optional single/multi toggle</h2>
+            <div className="pb-4 flex flex-col gap-10">
+                <div className='w-full'>
+                    <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+                        <li><span className="text-green-600 font-bold">✅ Done:</span> Create a countdown timer starting from a given seconds value</li>
+                        <li><span className="text-green-600 font-bold">✅ Done:</span> Start / Pause / Reset buttons</li>
+                        <li><span className="text-red-600 font-bold">❌ Fix:</span> Display time in MM:SS format — use <code>Math.floor</code> instead of <code>Math.ceil</code></li>
+                        <li><span className="text-red-600 font-bold">❌ Fix:</span> Show "Time's up!" when timer hits 0 — <code>hidden</code> class is hardcoded</li>
+                        <li><span className="text-red-600 font-bold">❌ Fix:</span> Custom time input — change <code>onchange</code> to <code>onChange</code>, add <code>value</code> prop</li>
+                        <li><span className="text-red-600 font-bold">❌ Fix:</span> Preset buttons — should be 30s, 1min, 5min, 10min</li>
+                        <li><span className="text-green-600 font-bold">✅ Done:</span> Progress ring or bar showing remaining time percentage</li>
+                        <li><span className="text-red-600 font-bold">❌ Fix:</span> Change color to red when &lt; 10 seconds remaining</li>
+                        <li><span className="text-green-600 font-bold">✅ Done:</span> Prevent multiple intervals from stacking (cleanup properly)</li>
+                        <li><span className="text-green-600 font-bold">✅ Done:</span> Pause should preserve remaining time — resume continues from there</li>
+                    </ul>
+                </div>
+
+                <div className="flex flex-col w-full">
+                    <div className="min-h-auto py-10 flex items-center justify-center bg-gray-100 p-4">
+                        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 space-y-6">
+                            <h1 className="text-2xl font-bold text-center text-gray-800">
+                                Countdown Timer: {progressPercent}
+                            </h1>
+                            <div className="flex flex-col items-center gap-6 p-8">
+                                <div className="relative w-[200px] h-[200px]">
+                                    <svg width="200" height="200" className="rotate-[-90deg]">
+                                        <circle
+                                            cx="100"
+                                            cy="100"
+                                            r={radius}
+                                            stroke="#e5e7eb"
+                                            strokeWidth="12"
+                                            fill="transparent"
+                                        />
+                                        <circle
+                                            cx="100"
+                                            cy="100"
+                                            r={radius}
+                                            stroke="#2563eb"
+                                            strokeWidth="12"
+                                            fill="transparent"
+                                            strokeDasharray={circumference}
+                                            strokeDashoffset={offset}
+                                            strokeLinecap="round"
+                                            className="transition-all duration-1000 ease-linear"
+                                        />
+                                    </svg>
+                                    <div className="absolute inset-0 flex items-center justify-center text-4xl font-bold">
+                                        {formatted}
+                                    </div>
+                                </div>
+
+                                <p className="text-center text-red-500 font-semibold hidden">
+                                    Time's up!
+                                </p>
+
+                                <div className="flex items-center gap-2">
+                                    <label className="text-sm text-gray-600">Set time (sec):</label>
+                                    <input
+                                        onchange={handelInitalVal}
+                                        type="number"
+                                        placeholder="Enter seconds"
+                                        className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    />
+                                </div>
+
+                                <div className="flex flex-wrap gap-2 justify-center">
+                                    {[10, 30, 60, 300, 600].map((preset) => (
+                                        <button
+                                            onClick={() => handlePreset(preset)}
+                                            key={preset}
+                                            className="px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300"
+                                        >
+                                            {preset} Seconds
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="flex justify-center gap-3">
+                                    <button
+                                        onClick={handleStart}
+                                        className="px-5 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium">
+                                        Start
+                                    </button>
+                                    <button
+                                        onClick={handlePause}
+                                        className="px-5 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-medium">
+                                        Pause
+                                    </button>
+                                    <button
+                                        onClick={handleReset}
+                                        className="px-5 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium">
+                                        Reset
+                                    </button>
+                                </div>
+
+                                {progressPercent}
+                                <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-red-400 transition-all duration-1000 ease-linear"
+                                        style={{ width: \`\${progressPercent}%\` }}
+                                    />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default CountdownTimer`,u=`import React, { useEffect, useState } from 'react'
 import { LoadingMessage, ErrorMessage, NoRecordsMessage } from '../../shared-comps/HelperComps'
 import useDebounce from '../hooks/useDebounce'
 
@@ -264,7 +454,7 @@ const RecipeCard = ({ recipe }) => {
             </div>
         </>
     )
-}`,u=`import React, { useEffect, useMemo, useState } from 'react'
+}`,m=`import React, { useEffect, useMemo, useState } from 'react'
 import { LoadingMessage, ErrorMessage, NoRecordsMessage } from '../../shared-comps/HelperComps'
 
 const Test = () => {
@@ -359,7 +549,81 @@ const Test = () => {
     )
 }
 
-export default Test`,m=`import { useContext, useState } from 'react'
+export default Test`,p=`import React, { useState } from 'react'
+import useFetch from '../hooks/useFetch'
+import { LoadingMessage, ErrorMessage, NoRecordsMessage } from '../../shared-comps/HelperComps'
+
+function FetchDemo() {
+    const [endPoint, setEndPoint] = useState("users")
+    const { data, loading, httpClient, error, URL, BASE_URL } = useFetch()
+
+    const loadUsers = async () => {
+        const res = await httpClient(endPoint);
+        console.log(res);
+    };
+
+    if (loading) return (<LoadingMessage />)
+    if (error) return (<ErrorMessage />)
+    if (data?.length === 0) return (<NoRecordsMessage />)
+
+    return (
+        <>
+            <h2 className="text-lg mb-4 text-sky-700 font-bold">
+                {\`useFetch hook with {data, loading, error, httpClient} ==> \${BASE_URL}/\${endPoint}\`}
+            </h2>
+
+            <div className="pb-4 flex flex-col gap-10">
+                <div className='w-full'>
+                    <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+                        <li>❌ Create a custom hook <code>useFetch(url)</code> that returns <code>{\`{ data, loading, error, refetch }\`}</code></li>
+                        <li>❌ Hook should fetch data on mount and when URL changes</li>
+                        <li>✅ Handle loading state — show spinner while fetching</li>
+                        <li>❌ Handle error state — show error message with retry button</li>
+                        <li>❌ Use AbortController to cancel pending requests on unmount</li>
+                        <li>❌ Provide a <b>Refetch</b> button to manually re-fetch</li>
+                        <li>✅ Add a URL input field to fetch any public API</li>
+                        <li>❌ Add preset buttons for common APIs (users, posts, todos from jsonplaceholder)</li>
+                        <li>✅ Display fetched data in a formatted JSON <code>{\`<pre>\`}</code> block</li>
+                        <li>❌ Show request duration in ms</li>
+                        <li>❌ Handle empty URL gracefully (don't fetch)</li>
+                        <li>❌ Prevent race conditions when URL changes rapidly</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div className="mb-6 flex justify-end items-center gap-4 bg-sky-50 rounded-xl border border-sky-200 p-4">
+                        <span className="text-sm text-gray-700 whitespace-nowrap">
+                            Load data for <b>{URL}</b>
+                        </span>
+                        <input
+                            type="text"
+                            value={endPoint}
+                            onChange={(e) => setEndPoint(e.target.value)}
+                            placeholder="e.g. users, products, carts"
+                            className="w-full max-w-md bg-white rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400"
+                        />
+                        <button
+                            onClick={loadUsers}
+                            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-2xl text-xl transition-colors"
+                        >
+                            Load data
+                        </button>
+                    </div>
+
+                    <h4 className="text-sm font-semibold text-gray-800 mb-2">
+                        Total: <span className="text-sky-700">{data?.length ?? 0}</span>
+                    </h4>
+
+                    <pre className="bg-red-100 p-4 max-h-100 overflow-auto text-[10px] whitespace-pre-wrap break-words rounded-lg">
+                        {JSON.stringify(data, null, 2)}
+                    </pre>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default FetchDemo`,g=`import { useContext, useState } from 'react'
 import MessageContext from './context-provider/MessageContext'
 
 const initialvalues = 6
@@ -474,7 +738,7 @@ const LimitedCounter = () => {
     )
 }
 
-export default LimitedCounter`,p=`import React, { useState, useContext } from 'react'
+export default LimitedCounter`,b=`import React, { useState, useContext } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
 import MessageContext from './context-provider/MessageContext'
 
@@ -675,7 +939,7 @@ const LocalStorageHook = () => {
         </>
     )
 }
-export default LocalStorageHook`,g=`import ProductListWrapper from "./product-cart/ProductListWrapper"
+export default LocalStorageHook`,h=`import ProductListWrapper from "./product-cart/ProductListWrapper"
 import { CartProvider } from './context-provider/CartProvider';
 
 const ProductCartContextHook = () => {
@@ -721,7 +985,7 @@ const ProductCartContextHook = () => {
     )
 }
 
-export default ProductCartContextHook`,b=`import React, { useEffect, useState } from 'react'
+export default ProductCartContextHook`,x=`import React, { useEffect, useState } from 'react'
 
 const SearchableList = () => {
     const [products, setProducts] = useState([])
@@ -875,7 +1139,74 @@ const ProductCard = ({ product, seq }) => {
         </div>
     );
 };
-export default SearchableList`,h=`import React, { useState } from 'react'
+export default SearchableList`,f=`import React, { useState } from 'react'
+
+const stars = [1, 2, 3, 4, 5];
+const StarRating = () => {
+    const [rating, setRating] = useState(0)
+
+    return (
+        <>
+            <h2 className="text-lg mb-4 text-sky-700 font-bold">
+                Star Rating
+            </h2>
+            <div className="pb-4 flex flex-row gap-10">
+                <div className='w-1/2 requiremetns'>
+                    <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+                        <li>✅ Display 5 stars for rating (0 to 5)</li>
+                        <li>✅ Click a star to set the rating</li>
+                        <li>❌ Hover over a star to preview — highlight all stars up to hovered one</li>
+                        <li>❌ On hover leave, revert to the committed rating</li>
+                        <li>✅ Show "Rating: X / 5" text below</li>
+                        <li>❌ Support half-star ratings (0.5 steps) via click on left/right half of star</li>
+                        <li>❌ Keyboard accessible: arrow keys to change, Enter to commit</li>
+                        <li>❌ Read-only mode (disabled) for showing average ratings</li>
+                        <li>✅ Show a "Clear" button to reset rating to 0</li>
+                        <li>❌ Persist rating to localStorage</li>
+                    </ul>
+                </div>
+
+                <div className="preview-block flex-1 border rounded-xl bg-gray-50 border-gray-200">
+                    <div className="flex flex-col gap-4 p-8 h-full justify-center items-center bg-gray-50 w-full">
+                        <div className="flex items-center gap-2">
+                            {stars.map((star) => (
+                                <button
+                                    onClick={() => setRating(star)}
+                                    key={star}
+                                    type="button"
+                                    aria-label={\`Rate \${star} star\`}
+                                    className="w-10 h-10 transition-transform hover:scale-110"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        className={\`w-10 h-10 \${rating >= star ? "text-yellow-400" : "text-gray-300"}\`}
+                                        fill="currentColor"
+                                    >
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                </button>
+                            ))}
+                        </div>
+
+                        <p className="text-sm text-gray-700 font-medium">
+                            Rating: <span className="text-yellow-600 font-bold">{rating}</span> / 5
+                        </p>
+
+                        <button
+                            onClick={() => setRating(0)}
+                            type="button"
+                            className="px-4 py-1.5 text-sm rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium transition-colors"
+                        >
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default StarRating`,v=`import React, { useState } from 'react'
 
 const initialState = [
     {
@@ -1019,7 +1350,7 @@ const TodoApp = () => {
     )
 }
 
-export default TodoApp`,x=`import React, { useState } from 'react'
+export default TodoApp`,y=`import React, { useState } from 'react'
 
 const intialValues = {
     like: { count: 100, disabled: false },
@@ -1070,7 +1401,7 @@ const ToggleLIkeDislike = () => {
     )
 }
 
-export default ToggleLIkeDislike`,f=`import useWindowResize from '../hooks/useWindowResize'
+export default ToggleLIkeDislike`,w=`import useWindowResize from '../hooks/useWindowResize'
 
 
 
@@ -1129,4 +1460,4 @@ const LocalStorageHook = () => {
         </>
     )
 }
-export default LocalStorageHook`,v=Object.assign({"./react-comps/AAccordion.jsx":()=>t(()=>import("./AAccordion-CG67K2rB.js"),__vite__mapDeps([0,1,2])),"./react-comps/DebounceSearchHook.jsx":()=>t(()=>import("./DebounceSearchHook-CyxB2OVA.js"),__vite__mapDeps([3,1,2,4])),"./react-comps/DebounceSearch_NoHook.jsx":()=>t(()=>import("./DebounceSearch_NoHook-J8QLjGhy.js"),__vite__mapDeps([5,1,2,4])),"./react-comps/LimitedCounter.jsx":()=>t(()=>import("./LimitedCounter-B_3eu9ii.js"),__vite__mapDeps([6,1,2])),"./react-comps/LocalStorageHook.jsx":()=>t(()=>import("./LocalStorageHook-BElifeWx.js"),__vite__mapDeps([7,1,2])),"./react-comps/ProductCartContextHook.jsx":()=>t(()=>import("./ProductCartContextHook-CT37yfjc.js"),__vite__mapDeps([8,1,2])),"./react-comps/SearchableList.jsx":()=>t(()=>import("./SearchableList-CEarpyHh.js"),__vite__mapDeps([9,1,2])),"./react-comps/TodoApp.jsx":()=>t(()=>import("./TodoApp-C6Uwr44Y.js"),__vite__mapDeps([10,1,2])),"./react-comps/ToggleLIkeDislike.jsx":()=>t(()=>import("./ToggleLIkeDislike-Bs-VVhto.js"),__vite__mapDeps([11,1,2])),"./react-comps/WindowResizeHook.jsx":()=>t(()=>import("./WindowResizeHook-BeELFK6C.js"),__vite__mapDeps([12,1,2]))}),y=Object.assign({"./react-comps/AAccordion.jsx":d,"./react-comps/DebounceSearchHook.jsx":c,"./react-comps/DebounceSearch_NoHook.jsx":u,"./react-comps/LimitedCounter.jsx":m,"./react-comps/LocalStorageHook.jsx":p,"./react-comps/ProductCartContextHook.jsx":g,"./react-comps/SearchableList.jsx":b,"./react-comps/TodoApp.jsx":h,"./react-comps/ToggleLIkeDislike.jsx":x,"./react-comps/WindowResizeHook.jsx":f}),w=Object.entries(v).map(([s,a])=>{const o=s.replace("./react-comps/","").replace(".jsx","");return{LazyComponent:l.lazy(a),name:o,source:y[s]??"// Source not available"}}),N=({source:s})=>{const[a,o]=l.useState(!1);return e.jsxs("div",{className:"mt-4 border-t border-gray-200 pt-4",children:[e.jsx("button",{type:"button",onClick:()=>o(i=>!i),className:"px-4 py-2 text-sm font-semibold text-orange-600 border border-orange-500 rounded-md hover:bg-orange-50 transition-colors cursor-pointer",children:a?"Hide Source Code":"Show Source Code"}),a&&e.jsx("div",{className:"mt-3 rounded-lg overflow-hidden",children:e.jsx(r,{language:"javascript",style:n,showLineNumbers:!0,children:s})})]})},C=()=>e.jsx("div",{children:w.map(({name:s,LazyComponent:a,source:o})=>e.jsxs("div",{className:"border border-orange-300 p-10 bg-white rounded-xl mb-6",children:[e.jsx("h3",{className:"text-2xl text-orange-600 font-bold mb-2",children:s}),e.jsx(l.Suspense,{fallback:e.jsx("p",{children:"Loading component…"}),children:e.jsx(a,{})}),e.jsx(N,{source:o})]},s))});export{C as default};
+export default LocalStorageHook`,N=Object.assign({"./react-comps/Accordion.jsx":()=>e(()=>import("./Accordion-DIqZgzuW.js"),__vite__mapDeps([0,1,2])),"./react-comps/CountdownTimer.jsx":()=>e(()=>import("./CountdownTimer-Dw3Y0VEv.js"),__vite__mapDeps([3,1,2])),"./react-comps/DebounceSearchHook.jsx":()=>e(()=>import("./DebounceSearchHook-D3ms9SiR.js"),__vite__mapDeps([4,1,2,5])),"./react-comps/DebounceSearch_NoHook.jsx":()=>e(()=>import("./DebounceSearch_NoHook-BZ3bO1fA.js"),__vite__mapDeps([6,1,2,5])),"./react-comps/FetchDemo.jsx":()=>e(()=>import("./FetchDemo-DnRi2P-C.js"),__vite__mapDeps([7,1,2,5])),"./react-comps/LimitedCounter.jsx":()=>e(()=>import("./LimitedCounter-CDlRkSWA.js"),__vite__mapDeps([8,1,2])),"./react-comps/LocalStorageHook.jsx":()=>e(()=>import("./LocalStorageHook-BnVXTmv8.js"),__vite__mapDeps([9,1,2])),"./react-comps/ProductCartContextHook.jsx":()=>e(()=>import("./ProductCartContextHook-CM-Gb3wi.js"),__vite__mapDeps([10,1,2])),"./react-comps/SearchableList.jsx":()=>e(()=>import("./SearchableList-Ctqca9o7.js"),__vite__mapDeps([11,1,2])),"./react-comps/StarRating.jsx":()=>e(()=>import("./StarRating-DyFVlhw_.js"),__vite__mapDeps([12,1,2])),"./react-comps/TodoApp.jsx":()=>e(()=>import("./TodoApp-CPt3-w-g.js"),__vite__mapDeps([13,1,2])),"./react-comps/ToggleLIkeDislike.jsx":()=>e(()=>import("./ToggleLIkeDislike--yk-JjV6.js"),__vite__mapDeps([14,1,2])),"./react-comps/WindowResizeHook.jsx":()=>e(()=>import("./WindowResizeHook-B6wyeemO.js"),__vite__mapDeps([15,1,2]))}),k=Object.assign({"./react-comps/Accordion.jsx":d,"./react-comps/CountdownTimer.jsx":c,"./react-comps/DebounceSearchHook.jsx":u,"./react-comps/DebounceSearch_NoHook.jsx":m,"./react-comps/FetchDemo.jsx":p,"./react-comps/LimitedCounter.jsx":g,"./react-comps/LocalStorageHook.jsx":b,"./react-comps/ProductCartContextHook.jsx":h,"./react-comps/SearchableList.jsx":x,"./react-comps/StarRating.jsx":f,"./react-comps/TodoApp.jsx":v,"./react-comps/ToggleLIkeDislike.jsx":y,"./react-comps/WindowResizeHook.jsx":w}),S=Object.entries(N).map(([s,a])=>{const o=s.replace("./react-comps/","").replace(".jsx","");return{LazyComponent:n.lazy(a),name:o,source:k[s]??"// Source not available"}}),C=({source:s})=>{const[a,o]=n.useState(!1);return t.jsxs("div",{className:"mt-4 border-t border-gray-200 pt-4",children:[t.jsx("button",{type:"button",onClick:()=>o(l=>!l),className:"px-4 py-2 text-sm font-semibold text-orange-600 border border-orange-500 rounded-md hover:bg-orange-50 transition-colors cursor-pointer",children:a?"Hide Source Code":"Show Source Code"}),a&&t.jsx("div",{className:"mt-3 rounded-lg overflow-hidden",children:t.jsx(i,{language:"javascript",style:r,showLineNumbers:!0,children:s})})]})},T=()=>t.jsx("div",{children:S.map(({name:s,LazyComponent:a,source:o})=>t.jsxs("div",{className:"border border-orange-300 p-10 bg-white rounded-xl mb-6",children:[t.jsx("h3",{className:"text-2xl text-orange-600 font-bold mb-2",children:s}),t.jsx(n.Suspense,{fallback:t.jsx("p",{children:"Loading component…"}),children:t.jsx(a,{})}),t.jsx(C,{source:o})]},s))});export{T as default};
