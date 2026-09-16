@@ -38,12 +38,13 @@ const CodeRunner = ({ practice, seq }) => {
             </pre>
           </h3>
 
+          {/* Code */}
           <SyntaxHighlighter
             language="javascript"
             style={atomDark}
             showLineNumbers
           >
-            {practice.code || practice.fn.toString()}
+            {practice.fn.toString()}
           </SyntaxHighlighter>
 
           {/* Output */}
