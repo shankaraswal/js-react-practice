@@ -16,7 +16,7 @@ const CodeRunner = ({ practice, seq }) => {
                    px-4 py-3 text-left"
       >
         <h2 className="!text-white text-2xl font-medium ">
-          {seq}:  {practice.title}
+          {seq}: {practice.title}
         </h2>
 
         <span className="text-xl text-white">
@@ -38,13 +38,12 @@ const CodeRunner = ({ practice, seq }) => {
             </pre>
           </h3>
 
-          {/* Code */}
           <SyntaxHighlighter
             language="javascript"
             style={atomDark}
             showLineNumbers
           >
-            {practice.fn.toString()}
+            {practice.code || practice.fn.toString()}
           </SyntaxHighlighter>
 
           {/* Output */}
