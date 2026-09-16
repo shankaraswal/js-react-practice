@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useCallback, useState } from 'react'
-const INITIAL_VAL = 10
+const INITIAL_VAL = 15
 const CountdownTimer = () => {
     const [initialValue, setInitialValue] = useState(INITIAL_VAL);
     const [time, setTime] = useState(INITIAL_VAL)
@@ -7,7 +7,7 @@ const CountdownTimer = () => {
 
 
     const formatted = useMemo(() => {
-        const m = String(Math.ceil(Math.max(time, 0) / 60)).padStart(2, "0");
+        const m = String(Math.trunc(Math.max(time, 0) / 60)).padStart(2, "0");
         const s = String(Math.max(time, 0) % 60).padStart(2, "0");
         return `${m}:${s}`;
     }, [time]);
@@ -34,9 +34,11 @@ const CountdownTimer = () => {
     }, [isRunning]);
 
     const handelInitalVal = (e) => {
-        const v = Number(e.target.value) || 0;
-        setInitialValue(v);
-        setTime(v);
+        const v = Number(e.target.value);
+        if (Number.isNaN(v) || v < 0) return;
+
+        setInitialValue((prev) => prev + v);
+        setTime((prev) => prev + v);
     };
 
     const handlePreset = (preset) => {
@@ -90,7 +92,7 @@ const CountdownTimer = () => {
                     <div className="min-h-auto py-10 flex items-center justify-center bg-gray-100 p-4">
                         <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 space-y-6">
                             <h1 className="text-2xl font-bold text-center text-gray-800">
-                                Countdown Timer: {progressPercent}
+                                Countdown Timer: {formatted}
                             </h1>
                             <div className="flex flex-col items-center gap-6 p-8">
                                 <div className="relative w-[200px] h-[200px]">
@@ -129,6 +131,7 @@ const CountdownTimer = () => {
                                     <label className="text-sm text-gray-600">Set time (sec):</label>
                                     <input
                                         onchange={handelInitalVal}
+                                        value={time}
                                         type="number"
                                         placeholder="Enter seconds"
                                         className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
