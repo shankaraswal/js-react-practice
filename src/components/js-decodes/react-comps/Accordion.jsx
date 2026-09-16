@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 const titles = ["Privacy Policy", "Terms of Service", "Cookie Policy", "GDPR"];
 const privacyPolicyHTML = `
   <div class="max-w-3xl mx-auto p-6 text-gray-800 leading-relaxed">
-    <h1 class="text-2xl font-bold text-sky-700 mb-4">Privacy Policy</h1>
-
     <p class="mb-4">
       This Privacy Policy explains how your personal information is collected, used,
       disclosed, and otherwise processed by the respective operating entity of the Site:
@@ -33,6 +31,7 @@ const privacyPolicyHTML = `
 `;
 
 function Accordions() {
+    const [multiple, setMultiple] = useState(false)
     const [accs, setAccs] = useState(() =>
         Array.from({ length: 4 }, (_, ind) => ({
             id: `${Date.now()}-${ind} `,
@@ -43,13 +42,13 @@ function Accordions() {
     )
 
     const handleToggle = (id) => {
-        setAccs((prev) => prev.map((item) => {
-            if (id === item.id) {
-                return { ...item, open: true }
-            } else {
-                return { ...item, open: false }
-            }
-        }))
+        setAccs((prev) => prev.map((item) =>
+            multiple
+                ? id === item.id
+                    ? { ...item, open: !item.open }
+                    : item
+                : id === item.id ? { ...item, open: !item.open } : { ...item, open: false }
+        ))
     }
 
     const expandToggle = (type) => {
@@ -57,10 +56,10 @@ function Accordions() {
             type === 'expand' ? { ...item, open: true } : { ...item, open: false }
         ))
     }
-    console.log(accs)
+    // console.log(multiple)
     return (
         <>
-            <h2 className="text-lg mb-4 text-sky-700 font-bold">Debounce Searching Without useDebounce Hook </h2>
+            <h2 className="text-lg mb-4 text-sky-700 font-bold">Accordion optional single/multi toggle</h2>
             <div className="pb-4 flex flex-col gap-10">
                 <div className='w-full'>
                     <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
@@ -79,6 +78,13 @@ function Accordions() {
                 <div className=''>
                     <div className="flex flex-col w-full">
                         <div className='flex flex-row p-4 justify-end gap-4'>
+                            <label className='border border-red-100 bg-red-50 px-4 py-1 rounded-xl hover:bg-amber-100 hover:cursor-pointer'>Toggle and multiple Expand:
+                                <input
+                                    onChange={(e) => setMultiple(e.currentTarget.checked)}
+                                    type="checkbox"
+                                    checked={multiple}
+                                    className="ml-2 checkbox rounded-xl border border-red-300 p-2" />
+                            </label>
                             <button
                                 onClick={() => expandToggle('expand')}
                             >Expand All</button>
@@ -123,6 +129,7 @@ const Accordion = ({ item, handleToggle }) => {
             {/* CONTENT */}
             {item.open && (
                 <div className="px-4 py-3 bg-white text-sm text-gray-700">
+                    <h1 class="text-2xl font-bold text-sky-700 mb-4">{item.title}</h1>
                     <div dangerouslySetInnerHTML={{ __html: item.body }} />;
                 </div>
             )}
