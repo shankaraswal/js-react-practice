@@ -1,4 +1,4 @@
-import{r as i,j as e}from"./index-DnM9gnAQ.js";const p=["Privacy Policy","Terms of Service","Cookie Policy","GDPR"],h=`
+import{r as i,j as e}from"./index-CI9ZrU-J.js";const p=["Privacy Policy","Terms of Service","Cookie Policy","GDPR"],h=`
   <div class="max-w-3xl mx-auto p-6 text-gray-800 leading-relaxed">
     <p class="mb-4">
       This Privacy Policy explains how your personal information is collected, used,
